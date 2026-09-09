@@ -1,0 +1,8 @@
+import Link from "next/link";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export default async function AdminPage() {
+  const supabase = await createSupabaseServerClient();
+  const { data: applications } = await supabase.from("provider_profiles").select("id, display_name, service_category, hourly_rate, approval_status, created_at").eq("approval_status", "pending").order("created_at", { ascending:false });
+  return <main><div className="shell"><div className="nav"><Link className="brand" href="/"><span className="mark">·</span>homehelp</Link><span className="kicker">Admin review</span></div><section className="section"><div className="kicker">Amsterdam pilot</div><h1 style={{ fontSize:"clamp(2.8rem,7vw,5rem)", marginTop:14 }}>Provider approvals.</h1><p className="lead" style={{ fontSize:17 }}>Review applications before they appear in the marketplace.</p><div className="card" style={{ marginTop:32, overflow:"hidden" }}><div style={{ padding:20, borderBottom:"1px solid var(--line)", fontWeight:700 }}>{applications?.length ?? 0} pending applications</div>{applications?.length ? applications.map((item) => <div key={item.id} style={{ display:"flex", justifyContent:"space-between", gap:20, padding:18, borderBottom:"1px solid var(--line)" }}><div><strong>{item.display_name}</strong><div className="provider-role">{item.service_category} · €{item.hourly_rate}/hour</div></div><button className="btn btn-primary">Review</button></div>) : <div style={{ padding:20, color:"var(--muted)" }}>No pending applications yet.</div>}</div></section></div></main>;
+}
