@@ -59,3 +59,4 @@ The MVP uses Stripe Connect Express accounts and a 12% application fee. Change `
 - Complete Stripe webhook persistence and refunds
 - Add email notifications and GDPR/legal pages
 - Add Dutch/English localization and Amsterdam neighborhood filters
+
