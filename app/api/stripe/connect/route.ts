@@ -8,4 +8,4 @@ export async function POST(request: Request) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? new URL(request.url).origin;
   const link = await stripe.accountLinks.create({ account:account.id, refresh_url:`${baseUrl}/provider/onboarding`, return_url:`${baseUrl}/dashboard`, type:"account_onboarding" });
   return NextResponse.json({ accountId:account.id, url:link.url });
-}
+  
